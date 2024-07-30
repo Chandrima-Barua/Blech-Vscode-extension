@@ -1,0 +1,23 @@
+module
+
+unit mm
+
+typealias MyT = float32[mm]
+
+ref struct CLS
+    var x : MyT = 10[mm]
+extension
+    activity calcing(obj: CLS) returns bool
+        while true repeat
+            await true
+            let ref x = obj.x
+            x = x + (x/2)
+        end
+        return false // will never return ;-)
+    end
+end
+
+activity maining()
+    var o: CLS = {}
+    run CLS.calcing(o)
+end

@@ -1,0 +1,10 @@
+module
+
+activity calc() returns int64
+    await true
+    return 0
+end
+
+activity main ()()
+    run _ = calc()
+end

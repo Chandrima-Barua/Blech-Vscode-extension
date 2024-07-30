@@ -1,0 +1,5 @@
+module
+
+activity empty ()()
+    await false;
+end

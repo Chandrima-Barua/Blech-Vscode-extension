@@ -1,0 +1,14 @@
+module
+
+
+activity other ()()
+    await false
+end
+
+activity empty ()()
+    var x: bool = false
+
+    x = x or true
+    run other()
+    
+end

@@ -1,0 +1,26 @@
+activity multConcurAccesses (e:bool) (x shares e :bool, y :bool)
+	var d: int32 = 0;
+	var f: int32 = 1
+	var g: bool
+	var h: bool
+	cobegin
+		cobegin
+			y = false
+		with
+			f = 3
+			g = x
+			h = e
+		end  
+		f = 4
+	with
+		d = 5
+		x = true
+	end
+	await true
+end
+	
+@[EntryPoint]
+activity main () ()
+	var b: bool = true
+	run multConcurAccesses (b)(b,b)
+end

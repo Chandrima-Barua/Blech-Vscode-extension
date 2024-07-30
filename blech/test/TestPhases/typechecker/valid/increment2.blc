@@ -1,0 +1,8 @@
+module
+
+activity empty ()()
+    var x: float64 = 15.0
+
+    x = x + 1.0
+    await false;
+end

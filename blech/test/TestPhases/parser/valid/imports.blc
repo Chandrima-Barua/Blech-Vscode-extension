@@ -1,0 +1,9 @@
+// external imports
+import service "directory/service"
+
+import os "blabla/fasel/otherservice" exposes f
+
+
+module
+
+

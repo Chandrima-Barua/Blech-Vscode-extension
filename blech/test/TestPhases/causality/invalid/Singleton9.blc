@@ -1,0 +1,28 @@
+@[CFunction(binding="",header="")]
+extern singleton function g()
+    
+
+function f()
+    g()
+end
+
+function h() returns nat8
+    g()
+    return 7
+end
+
+activity B(x: nat8) returns nat8
+    await true
+    return 42
+end
+
+@[EntryPoint]
+activity A()
+    var foo: [30]nat8
+    cobegin
+        run foo[h()] = B(7)()
+    with
+        await true
+        f()
+    end
+end

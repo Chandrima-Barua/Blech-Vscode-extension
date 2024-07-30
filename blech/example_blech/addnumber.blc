@@ -1,0 +1,28 @@
+
+// activity add (a: int32, b: int32) (res: int32)
+// sharing Interface
+// Example of checking correctness of procedure body with sharing Interface
+@[EntryPoint] 
+activity add (a: int32, b: int32) (res shares b: int32) 
+    cobegin
+        await b > 10 
+    with weak
+        repeat
+            res =a+b;
+            await true; 
+        end
+    end 
+end
+
+activity Main  ()()
+    var d:  int32;
+    var e:  int32;
+    var f: int32;
+    run add(d, e)(e)
+end
+
+
+
+
+
+

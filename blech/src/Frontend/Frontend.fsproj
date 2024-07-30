@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+ <!-- 
+    Copyright (c) 2019 - for information on the respective copyright owner
+    see the NOTICE file and/or the repository 
+    https://github.com/blech-lang/blech.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+  -->
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="BlechLexer.fsl" />
+    <None Include="Parser.fsy" />
+  </ItemGroup>
+  <ItemGroup>
+    <FsLex Include="BlechLexer.fsl">
+      <OtherFlags>--unicode</OtherFlags>
+    </FsLex>
+    <FsYacc Include="Parser.fsy">
+      <OtherFlags>--module BlechParser</OtherFlags>
+    </FsYacc>
+    <Compile Include="Constants.fs" />
+    <Compile Include="CommonTypes.fs" />
+    <Compile Include="DocPrint.fs" />
+    <Compile Include="Attribute.fs" />
+    <Compile Include="AST.fs" />
+    <Compile Include="ASTPrinter.fs" />
+    <Compile Include="SyntaxUtils.fs" />
+    <Compile Include="Parser.fs" />
+    <Compile Include="BlechLexer.fs" />
+    <Compile Include="ParsePkg.fs" />
+    <Compile Include="SymbolTable.fs" />
+    <Compile Include="NameChecking.fs" />
+    <Compile Include="OpaqueInference.fs" />
+    <Compile Include="ExportInference.fs" />
+    <Compile Include="SignaturePrinter.fs" />
+    <Compile Include="BlechTypes.fs" />
+    <Compile Include="TyChkErrors.fs" />
+    <Compile Include="TypeCheckContext.fs" />
+    <Compile Include="Evaluation.fs" />
+    <Compile Include="TyChkAmendment.fs" />
+    <Compile Include="TyChkExpressions.fs" />
+    <Compile Include="Annotation.fs" />
+    <Compile Include="TypeChecking.fs" />
+    <Compile Include="ImportChecking.fs" />
+    <PackageReference Include="FsLexYacc" Version="10.2.0" />
+    <PackageReference Include="FsLexYacc.Runtime" Version="10.2.0" />
+    <ProjectReference Include="..\Common\Common.fsproj" />
+    <PackageReference Include="FSharp.Core" Version="6.0.3" />
+   </ItemGroup>
+  
+</Project>

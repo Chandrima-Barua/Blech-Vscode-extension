@@ -1,0 +1,32 @@
+activity A(inA: int32)(outA: int32)
+    cobegin
+        await inA > 10 
+    with weak
+        repeat
+            outA =inA;
+            await true; 
+        end
+    end 
+end
+
+activity B(inB: int32)(outB: int32)
+    cobegin
+        await inB > 10 
+    with weak
+        repeat
+            outB =inB;
+            await true; 
+        end
+    end 
+end
+
+@[EntryPoint] 
+activity main ()
+    var x: int32 = 0
+    var y: int32 = 0
+    cobegin weak
+        run A(x)(y)
+    with
+        run B(prev y)(x)
+    end
+end

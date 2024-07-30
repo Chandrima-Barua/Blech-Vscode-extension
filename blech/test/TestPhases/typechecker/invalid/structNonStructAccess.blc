@@ -1,0 +1,7 @@
+module
+
+activity main ()()
+  var s: int8 = 7
+  s.q = 6
+  await true
+end

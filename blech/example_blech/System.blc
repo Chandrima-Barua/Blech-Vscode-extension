@@ -1,0 +1,22 @@
+
+import MAC
+@[CFunction (binding = "<c-function macro>", header = "<C header>.h")]
+extern singleton function get () () returns float64
+    singleton activity Sample () (arr: [2]float64)
+        repeat
+            arr[0] = get(); arr[1] = get(); await true
+        end
+    end    
+
+@[EntryPoint]
+singleton activity Ctrl () () returns float64
+    var s: MAC.State = {}
+    var arr: [2]float64
+
+    cobegin weak
+        run Sample()(arr)
+    with weak
+        run MAC.Accumulate (arr) (s)
+    end
+    return s.acc - s.m1 * s.m2
+end

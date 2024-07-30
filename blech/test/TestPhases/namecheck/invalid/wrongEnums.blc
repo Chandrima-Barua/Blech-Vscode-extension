@@ -1,0 +1,8 @@
+module
+
+enum Color: Color  // rawtype Color is not declared
+    Red
+    Green
+    Blue
+end
+

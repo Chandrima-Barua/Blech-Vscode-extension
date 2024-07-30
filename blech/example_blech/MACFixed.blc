@@ -1,0 +1,28 @@
+module exposes State,Accumulate // The problem is with the language server with keywords 
+const CAP: float64 = 4096.0 // The plugin may not updated.It shows error but it has been compiled.
+struct  State
+    var m1: float64;
+    var m2: float64;
+    var acc: float64;
+end
+
+activity MacOp(ms: State)(a shares ms : float64)
+    repeat
+        a = ms.m1 * ms.m2 + ms.acc;
+        await true
+    end
+end
+
+activity Accumulate (arr: [2] float64)(s: State)
+    var localState: State;
+    cobegin weak
+        repeat 
+            s.m1 = arr[0]; s.m2 = arr[1];
+            await true
+        end
+    with weak
+        run MacOp (s) (localState.acc) //Make sure these two has no shared part.
+    with
+        await s.acc > CAP
+    end
+end

@@ -1,0 +1,10 @@
+module
+
+function calc() returns float64
+    return 123.321
+end
+
+activity main ()()
+    var x: float64
+    run x = calc()
+end

@@ -1,0 +1,12 @@
+@[EntryPoint]
+activity add (a: int32, b: int32) (s shares b: int32) 
+    cobegin
+        await b > 10
+    with weak
+        repeat
+            s  = a + b; await false;
+        end
+    end
+    
+end
+

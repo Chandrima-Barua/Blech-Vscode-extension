@@ -1,0 +1,116 @@
+{
+    "name": "blech-language-services",
+    "displayName": "Blech language services",
+    "description": "Blech syntax highlighting and language server.",
+    "version": "0.7.2",
+    "author": "Blech Team",
+    "publisher": "BlechTeam",
+    "license": "Apache-2.0",
+    "private": true,
+    "engines": {
+        "vscode": "^1.32.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "icon": "images/blechlogo.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/blech-lang/blech-tools"
+    },
+    "contributes": {
+        "commands": [
+            {
+                "command": "myExtension.generateGraph",
+                "title": "Generate Graph"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "myExtension.generateGraph",
+                    "when": "editorLangId == blech",
+                    "group": "My Commands"
+                }
+            ]
+        },
+        "languages": [
+            {
+                "id": "blech",
+                "aliases": [
+                    "Blech",
+                    "blech"
+                ],
+                "extensions": [
+                    ".blc",
+                    ".blh"
+                ],
+                "configuration": "./blech.configuration.json"
+            },
+            {
+                "id": "blech-markdown",
+                "aliases": [
+                    "Blech Markdown",
+                    "blechmarkdown"
+                ]
+            }
+        ],
+        "grammars": [
+            {
+                "language": "blech",
+                "scopeName": "source.blech",
+                "path": "./syntaxes/blech.json"
+            },
+            {
+                "language": "blech-markdown",
+                "scopeName": "markdown.blech.codeblock",
+                "path": "./syntaxes/codeblock.json",
+                "injectTo": [
+                    "text.html.markdown"
+                ],
+                "embeddedLanguages": {
+                    "meta.embedded.block.blech": "blech"
+                }
+            }
+        ],
+        "snippets": [
+            {
+                "language": "blech",
+                "path": "./snippets/blech.json"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Blech configuration",
+            "properties": {
+                "blech.trace.server": {
+                    "scope": "window",
+                    "type": "string",
+                    "enum": [
+                        "off",
+                        "messages",
+                        "verbose"
+                    ],
+                    "default": "off",
+                    "description": "Traces the communication between VSCode and the language server."
+                }
+            }
+        }
+    },
+    "activationEvents": [
+        "onCommand:myExtension.generateGraph"
+    ],
+    "main": "./out/client/extension.js",
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -w -p ./"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^5.1.1"
+    },
+    "devDependencies": {
+        "@types/node": "^8.10.66",
+        "@types/vscode": "^1.32.0"
+    }
+}

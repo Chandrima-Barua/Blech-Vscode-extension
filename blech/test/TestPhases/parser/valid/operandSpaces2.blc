@@ -1,0 +1,8 @@
+module
+
+const x: int64 = 15
+
+activity empty ()()
+    x = x+2*17
+    await false;
+end

@@ -1,0 +1,31 @@
+function g(u64: nat64, u8: nat8)() returns nat32
+    if u64 > 3000000000000000000 then 
+        return 7 + u8
+    end
+    return 7
+end
+
+function f(u32: nat32)(o: nat8)
+    if u32 > 7 then o = 255
+    else o = 6
+    end
+end
+
+activity R (input: nat64)(out: nat8) returns nat32
+    repeat
+        out = out + 1
+        await true
+        let prevout = out
+        f(g(input, prevout))(out)
+    end
+    return 17
+end
+
+@[EntryPoint]
+activity U ()()
+    await true
+    var u8: nat8 = 129
+    let u16: nat16 = u8 + 255
+    var retcode: nat32
+    run retcode = R (u16-8)(u8)
+end

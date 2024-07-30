@@ -1,0 +1,16 @@
+module
+
+activity calc() returns int64
+    cobegin
+        await true
+        return 0
+    with weak
+        await false
+        return -1
+    end
+end
+
+activity main ()()
+    var x: int64
+    run x = calc()
+end

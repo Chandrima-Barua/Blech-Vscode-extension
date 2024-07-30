@@ -1,0 +1,49 @@
+// Example of checking correctness of procedure body with causality analysis
+@[EntryPoint]
+activity main () ()
+    var a: int32
+    var b: int32
+    var c: int32
+    var d: int32
+    cobegin
+        await true
+        a = b
+        await true
+        c = d
+    with
+        await true
+        b = c
+        await true
+        d = a
+    end
+end
+
+
+// Example with Admissibility of activity calls
+// activity proc1 (b: int32, d: int32) (a: int32, c: int32)
+//         await true
+//         a = b
+//         await true
+//         c = d
+// end
+
+// activity proc2 (c: int32, a: int32) (b: int32, d: int32)
+//         await true
+//         b = c
+//         await true
+//         d = a
+// end
+
+// @[EntryPoint]
+// activity main () ()
+//     var m: int32
+//     var n: int32
+//     var l: int32
+//     var p: int32
+//     cobegin
+//         run proc1(n, p)(m, l)
+//     with
+//         run proc2(l, m)(n, p)
+//     end
+// end
+

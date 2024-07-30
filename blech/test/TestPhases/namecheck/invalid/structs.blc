@@ -1,0 +1,29 @@
+module
+
+
+
+struct S      
+end
+
+enum E 
+    A 
+extension
+    function f()
+        var x: E = A
+        var y: S
+        isA(x, y)          // wrong
+    end
+
+    function isA(x: E, y: S) returns bool
+        E.f()          // wrong, just call f()
+    end
+end
+
+function f()
+    var x: E
+end
+
+function isA(x: E, y: S) returns bool
+    E.f()          // Correct
+end
+            

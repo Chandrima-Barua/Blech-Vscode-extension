@@ -1,0 +1,280 @@
+{
+    "struct type": {
+		"prefix": ["struct"],
+		"body": [
+			"struct ${1:<new type name>}",
+			"\t$0",
+			"end"
+		],
+		"description": "Struct type declaration"
+	},
+	
+	"cobegin": {
+		"prefix": ["cobegin"],
+		"body": [
+			"cobegin",
+			"\t${TM_SELECTED_TEXT:$1}",
+            "with",
+			"\t$0",
+			"end"
+		],
+		"description": "Concurrent branches"
+	},
+
+    "cobegin weak": {
+		"prefix": ["cobegin-weak"],
+		"body": [
+			"cobegin weak",
+			"\t${TM_SELECTED_TEXT:$1}",
+            "with weak",
+			"\t$0",
+			"end"
+		],
+		"description": "Concurrent weak branches"
+	},
+
+    "run activity": {
+        "prefix": ["run"],
+		"body": [
+			"run ${1:${2:<receiver>} = }${3:<activity>}(${4:<inputs>})${5:(${6:<outputs>})}"
+		],
+		"description": "Run an activity"
+	},
+
+	"if then": {
+		"prefix": ["if"],
+		"body": [
+			"if ${1:<condition>} then",
+			"\t${TM_SELECTED_TEXT:$0}",
+			"end"
+		],
+		"description": "If statement"
+	},
+
+	"if then else": {
+		"prefix": ["if-else"],
+		"body": [
+			"if ${1:condition} then",
+			"\t$2",
+			"else",
+			"\t$3",
+			"end"
+		],
+		"description": "If then else statement"
+	},
+
+    "if then elseif else": {
+		"prefix": ["if-elseif-else"],
+		"body": [
+			"if ${1:<condition>} then",
+            "\t$2",
+            "elseif ${3:<condition>} then",
+            "\t$4",
+			"else",
+            "\t$5",
+			"end"
+		],
+		"description": "If elseif statement"
+	},
+
+
+	"repeat forever": {
+		"prefix": ["repeat"],
+		"body": [
+			"repeat",
+			"\t${TM_SELECTED_TEXT:$0}",
+			"end"
+		],
+		"description": "Endless loop"
+	},
+
+	"repeat until": {
+		"prefix": ["repeat-until"],
+		"body": [
+			"repeat",
+			"\t${TM_SELECTED_TEXT:$0}",
+			"until ${1:<condition> end"
+		],
+		"description": "Until loop"
+	},
+
+	"when abort": {
+		"prefix": ["when-abort"],
+		"body": [
+			"when ${1:<condition>} abort",
+			"\t${TM_SELECTED_TEXT:$0}",
+			"end"
+		],
+		"description": "Abort preemption"
+	},
+
+	"when reset": {
+		"prefix": ["when-reset"],
+		"body": [
+			"when ${1:<condition>} reset}",
+			"\t${TM_SELECTED_TEXT:$0}",
+			"end"
+		],
+		"description": "Reset preemption"
+	},
+
+	"while repeat": {
+		"prefix": ["while-repeat"],    
+		"body": [
+			"while ${1:<condition>} repeat",
+			"\t${TM_SELECTED_TEXT:$0}",
+			"end"
+		],
+		"description": "While loop"
+	},
+
+	"activity": {
+		"prefix": ["activity"],
+		"body": [
+			"activity ${1:<name>} (${2:<inputs>})${3: (${4:<outputs>})}${5: returns ${6:<type>}}",
+			"\t$0",
+			"end"
+		],
+		"description": "Activity definition"
+	},
+
+	"@[EntryPoint] activity": {
+		"prefix": ["main", "entry-point"],
+		"body": [
+			"@[EntryPoint]",
+			"activity ${1:<name>} (${2:<inputs>})${3: (${4:<outputs>})}${5: returns ${6:<type>}}",
+			"\t$0",
+			"end"
+		],
+		"description": "Entry point activity"
+	},
+
+	"function": {
+		"prefix": ["function"],
+		"body": [
+			"function ${1:<name>} (${2:<inputs>})${3: (${4:<outputs>})}${5: returns ${6:<type>}}",
+			"\t${7}",
+			"end"
+		],
+		"description": "Function definition"
+    },
+
+    "@[CFunction(...)] extern function":{
+        "prefix": ["extern-function"],
+        "body":[
+            "@[CFunction (binding = \"${7:<c-function macro>}\", header = \"${8:<C header>}.h\")]",
+            "extern function ${1:<name>} (${2:<inputs>})${3: (${4:<outputs>})}${5: returns ${6:<type>}}"
+        ],
+        "description": "Bind to pure C function"
+    },
+
+    "@[CFunction(...)] extern singleton function":{
+        "prefix": ["extern-singleton-function"],
+        "body":[
+            "@[CFunction (binding = \"${7:<c-function macro>}\", header = \"${8:<C header>}.h\")]",
+            "extern singleton function ${1:<name>} (${2:<inputs>})${3: (${4:<outputs>})}${5: returns ${6:<type>}}"
+        ],
+        "description": "Bind to impure C function "
+    },
+    
+    "var":{
+        "prefix": ["var"],
+        "body":[
+            "var ${1:<id>}: ${2:<type>}${3: = <initial-value>}"
+        ],
+        "description": "Read-write variable"
+    },
+    
+    "let":{
+        "prefix": ["let"],
+        "body":[
+            "let ${1:<id>}: ${2:<type>}${3: = <initial-value>}"
+        ],
+        "description": "Read-only variable"
+    },
+    
+    "const":{
+        "prefix": ["const"],
+        "body":[
+            "const ${1:<id>}: ${2:<type>} = ${3:<compile-time-value>}"
+        ],
+        "description": "Compile-time constant"
+    },
+
+    "param":{
+        "prefix": ["param"],
+        "body":[
+            "param ${1:<id>}: ${2:<type>} = ${3:<compile-time-value>}"
+        ],
+        "description": "Compile-time parameter"
+    },
+
+    "@[CConst(...)] extern const":{
+        "prefix": ["extern-const"],
+        "body":[
+            "@[CConst (binding = \"${3:<c-constant macro>}\", header = \"${4:<c-header>}.h\")]",
+            "extern const ${1:<id>}: ${2:<type>}"
+        ],
+        "description": "Bind to external C constant"
+    },
+
+    "@[CParam(...)] extern param":{
+        "prefix": ["extern-param"],
+        "body":[
+            "@[CParam (binding = \"${3:<c-parameter macro>}\", header = \"${4:<c-header>}.h\")]",
+            "extern param ${1:<id>}: ${2:<type>}"
+        ],
+        "description": "Bind to external C parameter"
+    },
+
+    "@[COutput(...)] extern var":{
+        "prefix": ["extern-var"],
+        "body":[
+            "@[COutput (binding = \"${3:<c-variable macro>}\", header = \"${4:<c-header>}.h\")]",
+            "extern var ${1:<id>}: ${2:<type>}"
+        ],
+        "description": "Bind to external read-write C variable"
+    },
+    
+    "@[CInput(...)] extern let":{
+        "prefix": ["extern-let"],
+        "body":[
+            "@[CInput (binding = \"${3:<c-variable macro>}\", header = \"${4:<c-header>}.h\")]",
+            "extern let ${1:<id>}: ${2:<type>}"
+        ],
+        "description": "Bind to external read-only C variable"
+    },
+
+    "import": {
+        "prefix": ["import"],
+        "body":[
+            "import ${1:<localname>} \"${2:<module file>}\""
+        ],
+        "description": "Import a module"
+    },
+
+    "import exposes": {
+        "prefix": ["import-exposes"],
+        "body":[
+            "import ${1:<localname>} \"${2:<module file>}\" exposes ${3:<name>}, ${4:<name>}"
+        ],
+        "description": "Import a module and declare its exposed names"
+    },
+
+    "module exposes": {
+        "prefix": ["module"],
+        "body":[
+            "module exposes ${1:<name>}, ${2:<name>}"
+        ],
+        "description": "Declare a module and its exposed names"
+    },
+    
+    "@@[CInclude(...)]": {
+        "prefix": ["c-include"],
+        "body":[
+            "@@[CInclude(header=\"${1:<c-header>}\".h)]"
+        ],
+        "description": "Declare a module and its exposed names"
+    }
+
+}

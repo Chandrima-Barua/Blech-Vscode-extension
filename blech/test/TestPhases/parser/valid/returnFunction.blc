@@ -1,0 +1,5 @@
+module
+
+function foobar ()
+    return;
+end

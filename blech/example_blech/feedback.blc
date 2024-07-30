@@ -1,0 +1,21 @@
+activity P (x1:bool, x2:bool) (y1 :bool, y2 :bool)
+	var local_var1:bool 
+	var local_var2:bool
+	cobegin
+		local_var1 = x1
+		y1 = local_var1
+	with
+		local_var2 = x2
+		y2 = local_var2
+	end
+    await true
+end
+
+@[EntryPoint]
+activity main () ()
+	var in1: bool
+	var in2: bool
+	var out1: bool
+	var out2: bool
+	run P (in1,out1)(out1,out2)
+end

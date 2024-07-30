@@ -1,0 +1,20 @@
+@[EntryPoint]
+activity A()(x: int32,  y shares x: int32)
+    cobegin
+        repeat
+            x = 2
+            await true
+        until false end
+    with
+        repeat
+            await true
+            y = 42
+        until false end
+    end
+    await true
+end
+
+activity main () ()
+    var x: int32
+    run A ()(x, x)
+end

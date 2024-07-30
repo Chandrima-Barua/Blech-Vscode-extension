@@ -1,0 +1,12 @@
+module
+
+function someNumber() returns int8
+    return -128
+end
+
+activity start ()()
+    var x = -someNumber()
+    
+    var y = -(-127 - (1: int16))
+    await true
+end

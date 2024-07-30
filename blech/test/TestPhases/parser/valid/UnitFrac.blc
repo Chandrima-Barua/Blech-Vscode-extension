@@ -1,0 +1,5 @@
+module
+
+
+unit s
+unit Hz = 1 / s

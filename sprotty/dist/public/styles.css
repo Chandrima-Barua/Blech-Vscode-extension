@@ -4,7 +4,7 @@
 }
 .sprotty-edge {
     fill: none;
-    stroke: black;
+    stroke: rgb(219, 21, 21);
     stroke-width: 1px;
 }
 .sprotty-node.task {
@@ -12,7 +12,11 @@
     stroke: #444;
     stroke-width: 1;
 }
-
+.sprotty-edge.task {
+    fill: #d4dde5;
+    stroke: #444;
+    stroke-width: 1;
+}
 .sprotty-node.task.running {
     fill: #f00;
 }
@@ -27,5 +31,5 @@ text {
     fill: #000;
     font-family: sans-serif;
     font-size: 10pt;
-    text-anchor: middle;
-}
+    text-anchor: middle; 
+ }

@@ -1,15 +1,4 @@
 "use strict";
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertToSModel = void 0;
 // Function to parse node properties
@@ -80,8 +69,13 @@ function convertToSModel(data) {
         const parsedNodes = nodeGroup.map((nodeItem) => {
             const parsedProps = parseNodeProperties(nodeItem);
             // console.log('Parsed Node:', parsedProps);
-            const { id } = parsedProps, otherProps = __rest(parsedProps, ["id"]); // Destructure to get id and other properties
-            return Object.assign({ type: 'node', id: id, children: [] }, otherProps);
+            const { id, ...otherProps } = parsedProps; // Destructure to get id and other properties
+            return {
+                type: 'node',
+                id: id,
+                children: [],
+                ...otherProps
+            };
         });
         sModel.children.push(...parsedNodes);
     });
@@ -90,10 +84,14 @@ function convertToSModel(data) {
         const parsedEdges = edgeGroup.map((edgeItem) => {
             const edgeProps = parseEdgeProperties(edgeItem);
             // console.log('Parsed Edge:', edgeProps);
-            const { sourceId, targetId } = edgeProps, otherProps = __rest(edgeProps, ["sourceId", "targetId"]); // Adjust based on actual edge properties
-            return Object.assign({ type: 'edge', 
+            const { sourceId, targetId, ...otherProps } = edgeProps; // Adjust based on actual edge properties
+            return {
+                type: 'edge',
                 // id: `${sourceId}-${targetId}`,
-                sourceId: sourceId, targetId: targetId }, otherProps);
+                sourceId: sourceId,
+                targetId: targetId,
+                ...otherProps
+            };
         });
         sModel.children.push(...parsedEdges);
     });

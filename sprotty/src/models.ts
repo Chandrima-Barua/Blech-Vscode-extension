@@ -1,4 +1,4 @@
-import { SModelRoot, SNode, SEdge, SLabel } from 'sprotty-protocol';
+import { SNode, SEdge, } from 'sprotty-protocol';
 
 export interface GraphNode extends SNode {
     type: 'node';
@@ -9,22 +9,13 @@ export interface GraphNode extends SNode {
     fontcolor?: string;
     label?: string;
     children: SNode[];
-   
 }
 
 export interface GraphEdge extends SEdge {
     type: 'edge';
     sourceId: string;
     targetId: string;
-    transition?: string;
+    text?: string;
+    routingPoints: { x: number, y: number }[];
+    
 }
-
-// export interface GraphLabel extends SLabel {
-//     label:string
-// }
-
-// export interface GraphModelRoot extends SModelRoot {
-//     type: 'graph';
-//     id: string;
-//     children: SNode[];
-// }

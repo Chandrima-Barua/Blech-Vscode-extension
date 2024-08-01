@@ -12,24 +12,13 @@ const app = (0, express_1.default)();
 const port = 3000;
 app.use(body_parser_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-// app.get('/api/data', (req, res) => {
-//   res.json({ message: 'Hello from Sprotty!' });
-// });
-// app.post('/api/data', (req, res) => {
-//   // console.log('Received data:', req.body);
-//   // const nodeData = req.body.Node;
-//   // const edgeData = req.body.Edge;
-//   const sModel = convertToSModel(req.body);
-//   console.log("From server ts", JSON.stringify(sModel, null, 2));
-//   res.json({ message: 'Data received successfully', receivedData: req.body });
-// });
 app.post('/api/data', (req, res) => {
     const sModel = (0, parseutils_1.convertToSModel)(req.body);
     // console.log("From server ts", JSON.stringify(sModel, null, 2));
     (0, sModel_1.setSModel)(sModel); // Store the sModel using the setter function
     res.json({ message: 'Data received successfully', receivedData: req.body });
 });
-// New route to get the exported sModel
+// route to get the exported sModel
 app.get('/api/smodel', (req, res) => {
     const sModel = (0, sModel_1.getSModel)(); // Retrieve the sModel using the getter function
     res.json({ sModel });

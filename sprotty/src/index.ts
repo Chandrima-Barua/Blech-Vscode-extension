@@ -5,6 +5,7 @@ import { fetchSModelData } from "./model-source";
 
 export default async function run() {
     const graph = await fetchSModelData();
+    console.log(graph)
     const container = createContainer("sprotty-container");
     const modelSource = container.get<LocalModelSource>(TYPES.ModelSource);
     modelSource.setModel(graph);

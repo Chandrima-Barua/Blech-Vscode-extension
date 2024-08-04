@@ -57,9 +57,9 @@ async function fetchSModelData() {
                 id: element.id,
                 sourceId: element.sourceId,
                 targetId: element.targetId,
-                text: element.label,
+                text: element.label
                 // routerKind: 'manhattan',
-                routingPoints: [{ x: 670.5, y: 721.7 }, { x: 670.5, y: 539.75 }],
+                // routingPoints: [{ x: 670.5, y: 721.7 }, { x: 670.5, y: 539.75 }],
             });
         }
     });

@@ -1,8 +1,8 @@
 /** @jsx svg */
 import { svg } from 'sprotty/lib/lib/jsx';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { IView, PolylineEdgeView, RenderingContext, SEdgeImpl, SLabelView, SNodeImpl } from 'sprotty';
+import { EdgeRouterRegistry, isEdgeLayoutable, IView, IViewArgs, PointToPointLine, PolylineEdgeView, RenderingContext, SEdgeImpl, setAttr, ShapeView, SLabelImpl, SLabelView, SNodeImpl } from 'sprotty';
 import { GraphEdge, GraphNode } from './models';
 import { SLabel } from 'sprotty-protocol'
 @injectable()
@@ -35,52 +35,53 @@ export class GNodeView implements IView {
 
 @injectable()
 export class GEdgeView extends PolylineEdgeView {
-    render(edge: Readonly<SEdgeImpl & GraphEdge>, context: RenderingContext): VNode {
-        
-        const points = edge.routingPoints;
-        return (
-            <g>
-                {/* <polyline points={points.map(p => `${p.x},${p.y}`).join(' ')} class-sprotty-edge={true} /> */}
-                <text class-sprotty-edge={true} text-anchor="middle" dominant-baseline="central">
-                    {edge.text}
-                </text>
-            </g>
-        );
+    @inject(EdgeRouterRegistry)
+    edgeRouterRegistry!: EdgeRouterRegistry;
+
+    render(edge: Readonly<SEdgeImpl & GraphEdge>, context: RenderingContext): VNode | undefined {
+        const baseRender = super.render(edge, context);
+        const route = this.edgeRouterRegistry.route(edge);
+        const midPoint = calculateMidpoint(route);
+        const textElement = <text class-sprotty-edge={true} text-anchor="middle" dominant-baseline="central" x={midPoint.x} y={midPoint.y}>
+            {edge.text}
+        </text>;
+        if (baseRender) {
+            return <g>
+                {baseRender}
+                {textElement}
+            </g>;
+        } else {
+            return textElement;
+        }
     }
     
 }
+// Function to calculate the midpoint of a route
+    function calculateMidpoint(route: { x: number, y: number }[]): { x: number, y: number } {
+    if (route.length === 0) {
+        return { x: 0, y: 0 };
+    }
+    const totalLength = route.reduce((acc, point, index) => {
+        if (index === 0) return acc;
+        const dx = point.x - route[index - 1].x;
+        const dy = point.y - route[index - 1].y;
+        return acc + Math.sqrt(dx * dy + dy * dy);
+    }, 0);
 
-// export class GEdgeView extends PolylineEdgeView {
-//     render(edge: Readonly<SEdgeImpl & GraphEdge>, context: RenderingContext): VNode {
-//         const points = edge.routingPoints;
-//         const base = super.render(edge, context) as VNode;
+    let halfLength = totalLength / 2;
+    for (let i = 1; i < route.length; i++) {
+        const dx = route[i].x - route[i - 1].x;
+        const dy = route[i].y - route[i - 1].y;
+        const segmentLength = Math.sqrt(dx * dx + dy * dy);
+        if (halfLength <= segmentLength) {
+            const ratio = halfLength / segmentLength;
+            return {
+                x: route[i - 1].x + ratio * dx,
+                y: route[i - 1].y + ratio * dy
+            };
+        }
+        halfLength -= segmentLength;
+    }
 
-//         // Render the label if the edge has a text property
-//         const labelNode = edge.text ? this.renderLabel(edge, context) : null;
-
-//         return (
-//             <g>
-//                 <polyline points={points.map(p => `${p.x},${p.y}`).join(' ')} class-sprotty-edge="true" />
-//                 {labelNode}
-//                 {base}
-//             </g>
-//         );
-//     }
-
-//     protected renderLabel(edge: Readonly<SEdgeImpl & GraphEdge>, context: RenderingContext): VNode {
-//         const midIndex = Math.floor(edge.routingPoints.length / 2);
-//         const midPoint = edge.routingPoints[midIndex];
-        
-//         return (
-//             <text
-//                 class-sprotty-edge="true"
-//                 x={midPoint.x}
-//                 y={midPoint.y}
-//                 text-anchor="middle"
-//                 dominant-baseline="central"
-//             >
-//                 {edge.text}
-//             </text>
-//         );
-//     }
-// }
+    return route[route.length - 1];
+}

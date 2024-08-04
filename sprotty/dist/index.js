@@ -6,6 +6,7 @@ const di_config_1 = require("./di.config");
 const model_source_1 = require("./model-source");
 async function run() {
     const graph = await (0, model_source_1.fetchSModelData)();
+    console.log(graph);
     const container = (0, di_config_1.createContainer)("sprotty-container");
     const modelSource = container.get(sprotty_1.TYPES.ModelSource);
     modelSource.setModel(graph);

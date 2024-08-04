@@ -1,4 +1,4 @@
-import { SNode, SEdge, } from 'sprotty-protocol';
+import { SNode, SEdge, SLabel, Dimension, ModelLayoutOptions, Point, SModelElement } from 'sprotty-protocol';
 
 export interface GraphNode extends SNode {
     type: 'node';
@@ -16,6 +16,7 @@ export interface GraphEdge extends SEdge {
     sourceId: string;
     targetId: string;
     text?: string;
-    routingPoints: { x: number, y: number }[];
+    // routingPoints: { x: number, y: number }[];
     
 }
+

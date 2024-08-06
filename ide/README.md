@@ -4,12 +4,8 @@ We use Visual Studio Code as an editor for Blech sources. For this, we package a
 Install Visual Studio Code (a.k.a. VSCode) either from https://code.visualstudio.com/ or https://github.com/VSCodium/vscodium/releases. It can be installed locally without admin rights. 
 
 ### Prerequisites
-* Clone the blech-tools repository, including the blech compiler submodule
-  ```
-  git clone --recurse-submodules https://github.com/blech-lang/blech-tools.git
-  ```
-* Install `npm` (which of course requires Node.js)
-* Change to `ide` subdirectory.
+* setup blech compiler from blech directory. Follow the readME file in root folder
+* Install `npm` (which of course requires Node.js) inside ide
 * Install VSCE `npm -g install vsce`
 * Install Typescript `npm -g install typescript`
 * Install node modules for this project `npm install`
@@ -20,7 +16,7 @@ Install Visual Studio Code (a.k.a. VSCode) either from https://code.visualstudio
 * Build the actual language server using
   
   ```
-  dotnet publish -c Release -r win-x64 -o bin --self-contained -p:ShouldUnsetParentConfigurationAndPlatform=false
+  dotnet publish -c Release -r osx-arm64 -o bin --self-contained -p:ShouldUnsetParentConfigurationAndPlatform=false
   ```
   
   The property `-p:ShouldUnsetParentConfigurationAndPlatform=false` makes sure that the Blech compiler referenced by the language server is also build in configuration `Release` instead of `Debug`. 
@@ -39,4 +35,5 @@ Install Visual Studio Code (a.k.a. VSCode) either from https://code.visualstudio
 This gives you a VSIX file in the same directory. Install this in VS Code. Verify it works by opening some *.blc file. If the keywords are coloured, it works. Furthermore, if you hover over an activity name, you should see its signature in a tooltip.
 
 ### Debug the language services plugin:
-VS Code provides support for making changes and debugging extensions. The task that is run when we start debugging or press F5 is defined in .vscode/launch.json file. 
+After setup Language server go to blech folder and run follwoing command:(For Mac)
+dotnet ./src/blechc/bin/Debug/net6.0/blechc.dll  ./example_blech/addnumber.blc

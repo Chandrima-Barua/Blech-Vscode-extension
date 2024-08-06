@@ -36,4 +36,6 @@ This gives you a VSIX file in the same directory. Install this in VS Code. Verif
 
 ### Debug the language services plugin:
 After setup Language server go to blech folder and run follwoing command:(For Mac)
+```
 dotnet ./src/blechc/bin/Debug/net6.0/blechc.dll  ./example_blech/addnumber.blc
+```

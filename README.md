@@ -10,5 +10,8 @@ For Linux use linux-x64 or linux-arm64, for MacOS use osx-x64 for Intel or osx-a
 
 # Blech Language server setup: Follow ReadME file inside  ide directory
 
+https://github.com/Chandrima-Barua/Blech-Vscode-extension/tree/main/ide
+
 # Sprotty setup: Follow ReadME file inside sprotty directory:
 
+https://github.com/Chandrima-Barua/Blech-Vscode-extension/tree/main/sprotty

@@ -34,7 +34,7 @@ Install Visual Studio Code (a.k.a. VSCode) either from https://code.visualstudio
 
 This gives you a VSIX file in the same directory. Install this in VS Code. Verify it works by opening some *.blc file. If the keywords are coloured, it works. Furthermore, if you hover over an activity name, you should see its signature in a tooltip.
 
-### Debug the language services plugin:
+### Compile and run blech code:
 After setup Language server go to blech folder and run follwoing command:(For Mac)
 ```
 dotnet ./src/blechc/bin/Debug/net6.0/blechc.dll  ./example_blech/addnumber.blc

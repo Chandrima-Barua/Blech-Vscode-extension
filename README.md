@@ -1,4 +1,4 @@
-# Blech Compiler setup: In belch directory:
+# Blech Compiler setup: In root directory:
 
 ```
 cd blech
